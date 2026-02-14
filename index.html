@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Abril Pintos 💖</title>
+
+<style>
+body{
+    margin:0;
+    background:linear-gradient(135deg,#ff4e8a,#ff1f5a);
+    font-family:Arial, Helvetica, sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    overflow:hidden;
+}
+
+.card{
+    background:#f5e8da;
+    width:90%;
+    max-width:600px;
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    position:relative;
+}
+
+h1{ margin-bottom:5px; }
+
+.tree{
+    position:relative;
+    width:150px;
+    height:200px;
+    margin:20px auto;
+}
+
+.trunk{
+    width:20px;
+    height:80px;
+    background:#8b5a2b;
+    position:absolute;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+}
+
+.heart{
+    position:absolute;
+    width:15px;
+    height:15px;
+    background:red;
+    transform:rotate(45deg);
+    animation: float 4s infinite ease-in-out;
+}
+
+.heart::before,
+.heart::after{
+    content:"";
+    position:absolute;
+    width:15px;
+    height:15px;
+    background:red;
+    border-radius:50%;
+}
+
+.heart::before{ top:-7px; left:0; }
+.heart::after{ left:-7px; top:0; }
+
+@keyframes float{
+    0%{transform:translateY(0) rotate(45deg);}
+    50%{transform:translateY(-10px) rotate(45deg);}
+    100%{transform:translateY(0) rotate(45deg);}
+}
+
+.counter{
+    margin:15px 0;
+    font-weight:bold;
+}
+
+button{
+    padding:10px 20px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:16px;
+    margin:10px;
+}
+
+#yes{
+    background:#ff1f5a;
+    color:white;
+}
+
+#no{
+    background:gray;
+    color:white;
+    position:relative;
+}
+
+#finalMessage{
+    display:none;
+    font-weight:bold;
+    color:#ff1f5a;
+    margin-top:15px;
+    font-size:18px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1>Abril Pintos 💖</h1>
+    <p>Desde el 9 de mayo mi lugar seguro sos vos.</p>
+
+    <div class="counter">
+        Nuestro amor comenzó hace:<br>
+        <span id="time"></span>
+    </div>
+
+    <div class="tree">
+        <div class="trunk"></div>
+    </div>
+
+    <h2>¿Quieres ser mi San Valentín? 💘</h2>
+
+    <button id="yes">Sí 💖</button>
+    <button id="no">No 😏</button>
+
+    <p id="finalMessage">
+        Sabía que dirías que sí 😍<br>
+        Te amo Abril Pintos, gracias por estos días hermosos 💕
+    </p>
+</div>
+
+<!-- 🎵 Música -->
+<audio id="music" loop>
+    <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+// Fecha: 9 de mayo de 2025
+const startDate = new Date("2025-05-09T00:00:00");
+
+function updateCounter(){
+    const now = new Date();
+    const diff = now - startDate;
+
+    const days = Math.floor(diff / (1000*60*60*24));
+    const hours = Math.floor((diff / (1000*60*60)) % 24);
+    const minutes = Math.floor((diff / (1000*60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    document.getElementById("time").innerText =
+        `${days} días ${hours} horas ${minutes} minutos ${seconds} segundos`;
+}
+
+setInterval(updateCounter,1000);
+
+// Crear corazones
+const tree = document.querySelector(".tree");
+for(let i=0;i<40;i++){
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.style.left = Math.random()*130 + "px";
+    heart.style.top = Math.random()*120 + "px";
+    heart.style.animationDuration = (3 + Math.random()*3) + "s";
+    tree.appendChild(heart);
+}
+
+// Botón que se escapa
+const noBtn = document.getElementById("no");
+noBtn.addEventListener("mouseover",()=>{
+    noBtn.style.position="absolute";
+    noBtn.style.left=Math.random()*400+"px";
+    noBtn.style.top=Math.random()*300+"px";
+});
+
+// Botón sí
+document.getElementById("yes").addEventListener("click",()=>{
+    document.getElementById("finalMessage").style.display="block";
+    document.getElementById("music").play();
+});
+
+// Activar música al primer toque (celulares)
+document.addEventListener("click", function(){
+    document.getElementById("music").play();
+});
+</script>
+
+</body>
+  </html>
